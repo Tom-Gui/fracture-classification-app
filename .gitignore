@@ -1,0 +1,54 @@
+# Environments
+.env
+.venv
+venv/
+*/venv/
+env/
+*/env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE / Editor Files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Node / Angular
+node_modules/
+*/node_modules/
+dist/
+*/dist/
+coverage/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.angular/
+
+# Database / OS Files
+*.sqlite3
+*.db
+.DS_Store
+Thumbs.db
+
+# Flask / Python specific
+instance/
+*.egg-info/
+build/
+develop-eggs/
+eggs/
+sdist/
+var/
+*.mo
+*.pot
+
+# Migrations (Keep the migrations folder itself, but ignore specific generated files if needed - usually just commit the migrations folder)
+# Example: If Alembic generates extra temp files - adjust as needed
+
+# Add any other logs or generated files specific to your tools

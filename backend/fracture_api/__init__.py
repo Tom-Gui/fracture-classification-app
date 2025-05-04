@@ -23,8 +23,11 @@ def create_app(config_class=Config):
     cors.init_app(app, resources={r"/api/*": {"origins": "*"}})
 
     # Register Blueprints here (in later steps)
-    # from .api import bp as api_bp
-    # app.register_blueprint(api_bp, url_prefix='/api/v1')
+    # --- Register Blueprints ---
+    from .api import bp as api_blueprint # Import the blueprint
+    # All routes in api_blueprint will be prefixed with /api/v1
+    app.register_blueprint(api_blueprint, url_prefix='/api/v1')
+    # --- End Register Blueprints ---
 
     # Add a simple test route
     @app.route('/health')

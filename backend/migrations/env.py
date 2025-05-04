@@ -2,8 +2,21 @@ import logging
 from logging.config import fileConfig
 
 from flask import current_app
-
 from alembic import context
+from sqlalchemy import pool
+
+
+# --- Add these lines ---
+# Adjust the import path according to your project structure
+from fracture_api import db
+# TODO only importing the specific model, later this should/could
+# TODO be modified to import all the models
+from fracture_api.models import TestModel
+# You might need to create a dummy app instance to get context,
+# especially if your db object relies on app config.
+# This line often isn't needed if db is defined globally, but good practice:
+# app = create_app()
+# --------------------
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -11,7 +24,8 @@ config = context.config
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
-fileConfig(config.config_file_name)
+if config.config_file_name is not None:
+    fileConfig(config.config_file_name)
 logger = logging.getLogger('alembic.env')
 
 
@@ -44,6 +58,13 @@ target_db = current_app.extensions['migrate'].db
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
+# add your model's MetaData object here
+# for 'autogenerate' support
+# --- Modify this line ---
+# target_metadata = None # Default value
+target_metadata = db.metadata # Point Alembic to your SQLAlchemy metadata
+# ----------------------
+
 
 def get_metadata():
     if hasattr(target_db, 'metadatas'):
@@ -51,7 +72,7 @@ def get_metadata():
     return target_db.metadata
 
 
-def run_migrations_offline():
+def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
 
     This configures the context with just a URL
@@ -72,7 +93,7 @@ def run_migrations_offline():
         context.run_migrations()
 
 
-def run_migrations_online():
+def run_migrations_online() -> None:
     """Run migrations in 'online' mode.
 
     In this scenario we need to create an Engine
